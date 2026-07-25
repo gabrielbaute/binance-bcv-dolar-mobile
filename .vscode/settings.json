@@ -1,0 +1,34 @@
+{
+  // Deshabilitar completamente Java
+  "java.import.gradle.enabled": false,
+  "java.import.maven.enabled": false,
+  "java.autobuild.enabled": false,
+  "java.configuration.updateBuildConfiguration": "disabled",
+  "java.completion.enabled": false,
+  "java.format.enabled": false,
+  "java.semanticHighlighting.enabled": false,
+  
+  // Excluir carpetas Android del análisis
+  "files.exclude": {
+    "**/android": true,
+    "**/build": true,
+    "**/.dart_tool": true
+  },
+  "files.watcherExclude": {
+    "**/android/**": true,
+    "**/build/**": true,
+    "**/.dart_tool/**": true
+  },
+  
+  // Configuración específica para Dart/Flutter
+  "dart.analysisExcludedFolders": [
+    "**/android",
+    "**/build",
+    "**/.dart_tool"
+  ],
+  
+  // Si usas la extensión "Error Lens" o similares
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "never"
+  }
+}
