@@ -19,6 +19,7 @@ Por defecto, la aplicación se conecta a la API de nuestra instancia pública en
   <img src="docs/screenshots/realtime.jpeg" width="240" alt="Vista Tiempo Real" />
   <img src="docs/screenshots/history.jpeg" width="240" alt="Vista Histórico" />
 </p>
+
 #### Dark-theme
 <p align="center">
   <img src="docs/screenshots/promedio-dark.jpeg" width="240" alt="Vista Promedio y Calculadora" />
