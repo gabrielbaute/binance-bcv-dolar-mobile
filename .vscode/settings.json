@@ -1,34 +1,38 @@
 {
-  // Deshabilitar completamente Java
+  // 1. Deshabilitar la detección e importación automática de proyectos Java/Gradle
   "java.import.gradle.enabled": false,
   "java.import.maven.enabled": false,
   "java.autobuild.enabled": false,
   "java.configuration.updateBuildConfiguration": "disabled",
   "java.completion.enabled": false,
-  "java.format.enabled": false,
   "java.semanticHighlighting.enabled": false,
   
-  // Excluir carpetas Android del análisis
+  // Evita que Language Server para Java busque proyectos en estas rutas
+  "java.project.exclusionFilters": [
+    "**/android",
+    "**/android/**",
+    "**/build",
+    "**/build/**"
+  ],
+
+  // 2. Control visual y de consumo del File Watcher de VS Code
+  // Quitamos "**/android" de files.exclude para que Vuelva a ser visible
   "files.exclude": {
-    "**/android": true,
     "**/build": true,
     "**/.dart_tool": true
   },
+  
+  // Mantenemos watcherExclude para evitar que VS Code escuche cambios de archivos en background dentro de android
   "files.watcherExclude": {
     "**/android/**": true,
     "**/build/**": true,
     "**/.dart_tool/**": true
   },
-  
-  // Configuración específica para Dart/Flutter
+
+  // 3. Configuración específica para el analizador de Dart
   "dart.analysisExcludedFolders": [
-    "**/android",
-    "**/build",
-    "**/.dart_tool"
-  ],
-  
-  // Si usas la extensión "Error Lens" o similares
-  "editor.codeActionsOnSave": {
-    "source.fixAll": "never"
-  }
+    "android",
+    "build",
+    ".dart_tool"
+  ]
 }
