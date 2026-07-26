@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../views/promedio_view.dart';
 import '../views/realtime_view.dart';
+import '../views/history_view.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -28,8 +29,7 @@ class AppRouter {
       GoRoute(
         path: '/history',
         builder: (BuildContext context, GoRouterState state) {
-          // Placeholder temporal para el historial
-          return const Center(child: Text('Vista Historial'));
+          return HistoryView(currentPath: state.uri.toString());
         },
       ),
     ],
