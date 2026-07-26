@@ -2,9 +2,12 @@ import 'package:flutter/foundation.dart';
 import '../enums/bcv_currencies.dart';
 import '../enums/binance_assets.dart';
 import '../enums/fiat_currencies.dart';
+import '../enums/history_filter.dart';
 import '../enums/trade_type.dart';
 import '../models/bcv_currency_list_response.dart';
+import '../models/bcv_currency_response.dart';
 import '../models/binance_currency_list_response.dart';
+import '../models/binance_currency_response.dart';
 import '../services/history_service.dart';
 import '../errors/api_exceptions.dart';
 
@@ -15,6 +18,7 @@ import '../errors/api_exceptions.dart';
 ///   - _bcvDolarHistory (BCVCurrencyListResponse?): Contenedor de registros históricos para el Dólar BCV.
 ///   - _bcvEuroHistory (BCVCurrencyListResponse?): Contenedor de registros históricos para el Euro BCV.
 ///   - _binanceUsdtHistory (BinanceCurrencyListResponse?): Contenedor de registros históricos para USDT/VES Buy en Binance.
+///   - _selectedFilter (HistoryFilter): Filtro activo para la selección del gráfico.
 ///   - _isLoading (bool): Estado que indica si la carga de históricos está en proceso.
 ///   - _errorMessage (String?): Mensaje de error en caso de fallo en la petición.
 ///   - _lastFetchTime (DateTime?): Marca de tiempo de la última actualización exitosa.
@@ -24,6 +28,8 @@ class HistoryProvider extends ChangeNotifier {
   BCVCurrencyListResponse? _bcvDolarHistory;
   BCVCurrencyListResponse? _bcvEuroHistory;
   BinanceCurrencyListResponse? _binanceUsdtHistory;
+
+  HistoryFilter _selectedFilter = HistoryFilter.bcvDolar;
 
   bool _isLoading = false;
   String? _errorMessage;
@@ -40,9 +46,56 @@ class HistoryProvider extends ChangeNotifier {
   BCVCurrencyListResponse? get bcvEuroHistory => _bcvEuroHistory;
   BinanceCurrencyListResponse? get binanceUsdtHistory => _binanceUsdtHistory;
 
+  HistoryFilter get selectedFilter => _selectedFilter;
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
   DateTime? get lastFetchTime => _lastFetchTime;
+
+  /// Modifica el filtro seleccionado y notifica a los oyentes.
+  ///
+  /// Args:
+  ///   filter (HistoryFilter): Nuevo filtro seleccionado.
+  void setSelectedFilter(HistoryFilter filter) {
+    _selectedFilter = filter;
+    notifyListeners();
+  }
+
+  /// Retorna la etiqueta formateada del filtro actual.
+  String get selectedFilterLabel => _selectedFilter.value;
+
+  /// Indica si el filtro activo corresponde a un indicador BCV.
+  bool get isBcvFilter =>
+      _selectedFilter == HistoryFilter.bcvDolar ||
+      _selectedFilter == HistoryFilter.bcvEuro;
+
+  /// Obtiene la lista de registros BCV según el filtro activo.
+  List<BCVCurrencyResponse> get currentBcvPoints {
+    if (_selectedFilter == HistoryFilter.bcvDolar) {
+      return _bcvDolarHistory?.currencies ?? [];
+    } else if (_selectedFilter == HistoryFilter.bcvEuro) {
+      return _bcvEuroHistory?.currencies ?? [];
+    }
+    return [];
+  }
+
+  /// Obtiene la lista de registros Binance según el filtro activo.
+  List<BinanceCurrencyResponse> get currentBinancePoints {
+    if (_selectedFilter == HistoryFilter.binanceUsdt) {
+      return _binanceUsdtHistory?.currencies ?? [];
+    }
+    return [];
+  }
+
+  /// Retorna el valor más reciente registrado para el filtro actual.
+  double? get latestRate {
+    if (isBcvFilter) {
+      final points = currentBcvPoints;
+      return points.isNotEmpty ? points.last.rate : null;
+    } else {
+      final points = currentBinancePoints;
+      return points.isNotEmpty ? points.last.averagePrice : null;
+    }
+  }
 
   /// Carga simultáneamente el historial de Dólar BCV, Euro BCV y Binance USDT/VES Buy aplicando caché en memoria.
   ///
