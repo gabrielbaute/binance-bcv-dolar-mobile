@@ -95,18 +95,18 @@ class _RealtimeViewState extends State<RealtimeView> {
                   children: <Widget>[
                     Expanded(
                       child: CompactRateCard(
-                        title: 'BCV Dólar',
+                        title: 'Dólar',
                         rate: data?.bcvDolar?.rate,
-                        badgeText: 'Oficial',
+                        badgeText: 'BCV',
                         icon: Icons.account_balance_rounded,
                       ),
                     ),
                     const SizedBox(width: 8.0),
                     Expanded(
                       child: CompactRateCard(
-                        title: 'BCV Euro',
+                        title: 'Euro',
                         rate: data?.bcvEuro?.rate,
-                        badgeText: 'Oficial',
+                        badgeText: 'BCV',
                         icon: Icons.euro_rounded,
                       ),
                     ),

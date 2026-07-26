@@ -95,27 +95,27 @@ class _PromedioViewState extends State<PromedioView> {
                   children: <Widget>[
                     Expanded(
                       child: CompactRateCard(
-                        title: 'BCV Dólar',
+                        title: 'Dólar',
                         rate: response?.bcvDolar?.rate,
-                        badgeText: 'Oficial',
+                        badgeText: 'BCV',
                         icon: Icons.account_balance_rounded,
                       ),
                     ),
                     const SizedBox(width: 8.0),
                     Expanded(
                       child: CompactRateCard(
-                        title: 'BCV Euro',
+                        title: 'Euro',
                         rate: response?.bcvEuro?.rate,
-                        badgeText: 'Oficial',
+                        badgeText: 'BCV',
                         icon: Icons.euro_rounded,
                       ),
                     ),
                     const SizedBox(width: 8.0),
                     Expanded(
                       child: CompactRateCard(
-                        title: 'USDT Binance',
+                        title: 'USDT',
                         rate: response?.binanceUsdtVesBuy?.averagePrice,
-                        badgeText: 'P2P',
+                        badgeText: 'Binance',
                         icon: Icons.storefront_rounded,
                       ),
                     ),
