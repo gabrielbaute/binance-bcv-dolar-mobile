@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../../enums/history_filter.dart';
 import '../../providers/history_provider.dart';
 import '../components/history_chart_card.dart';
+import '../components/indicator_selector.dart';
 import '../components/rate_card.dart';
 import '../layouts/main_layout.dart';
 
@@ -87,32 +88,10 @@ class _HistoryViewState extends State<HistoryView> {
               Text('Seleccionar Indicador', style: theme.textTheme.titleMedium),
               const SizedBox(height: 8.0),
 
-              /* SegmentedButton para alternar entre Dólar BCV, Euro BCV y USDT Binance */
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: SegmentedButton<HistoryFilter>(
-                  segments: const <ButtonSegment<HistoryFilter>>[
-                    ButtonSegment<HistoryFilter>(
-                      value: HistoryFilter.bcvDolar,
-                      label: Text('BCV Dólar'),
-                      icon: Icon(Icons.account_balance_rounded),
-                    ),
-                    ButtonSegment<HistoryFilter>(
-                      value: HistoryFilter.bcvEuro,
-                      label: Text('BCV Euro'),
-                      icon: Icon(Icons.euro_rounded),
-                    ),
-                    ButtonSegment<HistoryFilter>(
-                      value: HistoryFilter.binanceUsdt,
-                      label: Text('USDT Binance'),
-                      icon: Icon(Icons.currency_bitcoin_rounded),
-                    ),
-                  ],
-                  selected: <HistoryFilter>{provider.selectedFilter},
-                  onSelectionChanged: (Set<HistoryFilter> newSelection) {
-                    provider.setSelectedFilter(newSelection.first);
-                  },
-                ),
+              /* Componente abstraído para selección del indicador */
+              IndicatorSelector(
+                selectedFilter: provider.selectedFilter,
+                onFilterChanged: (filter) => provider.setSelectedFilter(filter),
               ),
               const SizedBox(height: 20.0),
 
@@ -142,10 +121,10 @@ class _HistoryViewState extends State<HistoryView> {
 
                 /* Tarjeta con el último valor de la serie histórica actual */
                 RateCard(
-                  title: 'Último Registro (${provider.selectedFilterLabel})',
+                  title: '(${provider.selectedFilterLabel})',
                   rate: provider.latestRate,
                   isPrimary: true,
-                  badgeText: 'Reciente',
+                  badgeText: 'Último registro',
                   icon: Icons.history_toggle_off_rounded,
                 ),
               ],
