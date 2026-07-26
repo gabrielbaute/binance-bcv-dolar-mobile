@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/dolar_promedio_provider.dart';
 import '../components/calculator_card.dart';
+import '../components/compact_rate_card.dart';
 import '../components/rate_card.dart';
 import '../layouts/main_layout.dart';
 
@@ -89,28 +90,29 @@ class _PromedioViewState extends State<PromedioView> {
                 const SizedBox(height: 12.0),
 
                 /* Bloque secundario con tasas BCV y Paralelo */
+                /* Bloque secundario con tarjetas compactas */
                 Row(
                   children: <Widget>[
                     Expanded(
-                      child: RateCard(
+                      child: CompactRateCard(
                         title: 'BCV Dólar',
                         rate: response?.bcvDolar?.rate,
                         badgeText: 'Oficial',
                         icon: Icons.account_balance_rounded,
                       ),
                     ),
-                    const SizedBox(width: 12.0),
+                    const SizedBox(width: 8.0),
                     Expanded(
-                      child: RateCard(
+                      child: CompactRateCard(
                         title: 'BCV Euro',
                         rate: response?.bcvEuro?.rate,
                         badgeText: 'Oficial',
-                        icon: Icons.account_balance_rounded,
+                        icon: Icons.euro_rounded,
                       ),
                     ),
-                    const SizedBox(width: 12.0),
+                    const SizedBox(width: 8.0),
                     Expanded(
-                      child: RateCard(
+                      child: CompactRateCard(
                         title: 'USDT Binance',
                         rate: response?.binanceUsdtVesBuy?.averagePrice,
                         badgeText: 'P2P',
