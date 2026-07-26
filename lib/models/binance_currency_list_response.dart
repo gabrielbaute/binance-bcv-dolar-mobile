@@ -8,7 +8,7 @@ import 'binance_currency_response.dart';
 /// overall table records total.
 ///
 /// Attributes:
-///   - currencies (List<BinanceCurrencyResponse>): Collection list containing
+///   - currencies (List[BinanceCurrencyResponse]): Collection list containing
 ///     validated rate dataset representations.
 ///   - count (int): Absolute global count matching filters used to manage
 ///     client pagination states.
@@ -16,16 +16,14 @@ class BinanceCurrencyListResponse {
   final List<BinanceCurrencyResponse> currencies;
   final int count;
 
-  BinanceCurrencyListResponse({
-    required this.currencies,
-    required this.count,
-  });
+  BinanceCurrencyListResponse({required this.currencies, required this.count});
 
   factory BinanceCurrencyListResponse.fromJson(Map<String, dynamic> json) {
     return BinanceCurrencyListResponse(
       currencies: (json['currencies'] as List<dynamic>)
-          .map((e) => BinanceCurrencyResponse.fromJson(
-              e as Map<String, dynamic>))
+          .map(
+            (e) => BinanceCurrencyResponse.fromJson(e as Map<String, dynamic>),
+          )
           .toList(),
       count: json['count'] as int,
     );
