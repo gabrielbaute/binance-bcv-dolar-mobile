@@ -49,3 +49,5 @@ repomix-output.xml
 
 # Releases
 release/
+**/android/key.properties
+*.jks
