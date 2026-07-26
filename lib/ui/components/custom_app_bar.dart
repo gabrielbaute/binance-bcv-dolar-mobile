@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../providers/theme_provider.dart';
 import 'refresh_button.dart';
@@ -43,8 +44,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       scrolledUnderElevation: 0,
       actions: <Widget>[
+        /* Accion opcional de refresco */
         if (onRefresh != null)
           RefreshButton(onRefresh: onRefresh!, isLoading: isRefreshing),
+
+        /* Boton para alternar el tema claro/oscuro */
         IconButton(
           tooltip: 'Cambiar tema',
           icon: Icon(
@@ -54,6 +58,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             color: theme.colorScheme.primary,
           ),
           onPressed: () => themeProvider.toggleTheme(),
+        ),
+
+        /* Boton de informacion sobre la app (About) */
+        IconButton(
+          tooltip: 'Acerca de',
+          icon: Icon(Icons.info_rounded, color: theme.colorScheme.primary),
+          onPressed: () => context.push('/about'),
         ),
       ],
     );
