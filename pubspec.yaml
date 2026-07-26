@@ -10,6 +10,7 @@ dependencies:
   dio: ^5.11.0
   flutter:
     sdk: flutter
+  go_router: ^17.3.0
   provider: ^6.1.5+1
   uuid: ^4.6.0
 
