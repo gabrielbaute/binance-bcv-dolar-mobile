@@ -46,3 +46,6 @@ app.*.map.json
 
 # Repomix
 repomix-output.xml
+
+# Releases
+release/

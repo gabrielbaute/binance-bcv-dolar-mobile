@@ -1,7 +1,7 @@
 name: dolarvzla
 description: "An android client for DolarVzla project."
 publish_to: 'none'
-version: 0.1.0+3
+version: 0.1.0+4
 
 environment:
   sdk: ^3.12.2
@@ -24,6 +24,14 @@ dev_dependencies:
 flutter_post_builder:
   package_name: "Dolar Pulse VE"
   append_version: true
+  final_directory: "./release"
+  move_files: true
+  discard:
+    v7a: false
+    a64: false
+    x86: false
+    uni: false
+  clean_build_folder: true
 
 flutter:
   uses-material-design: true
