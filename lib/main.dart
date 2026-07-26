@@ -5,6 +5,7 @@ import 'providers/history_provider.dart';
 import 'providers/realtime_provider.dart';
 import 'providers/theme_provider.dart';
 import 'ui/themes/app_theme.dart';
+import 'ui/router/app_router.dart';
 
 void main() {
   runApp(
@@ -35,13 +36,13 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeProvider = context.watch<ThemeProvider>();
 
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Dolar Pulse VE',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: themeProvider.themeMode,
-      home: const Scaffold(body: Center(child: Text('Dolar Pulse VE'))),
+      routerConfig: AppRouter.router,
     );
   }
 }
