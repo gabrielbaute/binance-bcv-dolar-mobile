@@ -6,8 +6,8 @@ import '../../models/binance_currency_response.dart';
 /// Tarjeta genérica para renderizar datos históricos de BCV o Binance usando fl_chart.
 ///
 /// Attributes:
-///   - bcvData (List[BCVCurrencyResponse]?): Colección de registros históricos BCV.
-///   - binanceData (List[BinanceCurrencyResponse]?): Colección de registros históricos Binance.
+///   - bcvData (List`\<BCVCurrencyResponse\>`?): Colección de registros históricos BCV.
+///   - binanceData (List`\<BinanceCurrencyResponse\>`?): Colección de registros históricos Binance.
 ///   - lineColor (Color): Color distintivo de la serie.
 ///   - title (String): Título descriptivo del indicador.
 class HistoryChartCard extends StatelessWidget {
@@ -20,8 +20,8 @@ class HistoryChartCard extends StatelessWidget {
   ///
   /// Args:
   ///   key (Key?): Llave del widget.
-  ///   bcvData (List[BCVCurrencyResponse]?): Registros de BCV.
-  ///   binanceData (List[BinanceCurrencyResponse]?): Registros de Binance.
+  ///   bcvData (List`\<BCVCurrencyResponse\>`?): Registros de BCV.
+  ///   binanceData (List`\<BinanceCurrencyResponse\>`?): Registros de Binance.
   ///   lineColor (Color): Color de la línea del gráfico.
   ///   title (String): Título superior.
   const HistoryChartCard({
@@ -36,20 +36,20 @@ class HistoryChartCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    // Extracción estandarizada de fecha y precio
-    final List<({DateTime date, double rate})> points = [];
+    /* Extracción estandarizada de fecha y precio */
+    final List<({DateTime date, double rate})> rawPoints = [];
 
     if (bcvData != null && bcvData!.isNotEmpty) {
-      points.addAll(bcvData!.map((e) => (date: e.date, rate: e.rate)));
+      rawPoints.addAll(bcvData!.map((e) => (date: e.date, rate: e.rate)));
     } else if (binanceData != null && binanceData!.isNotEmpty) {
-      points.addAll(
+      rawPoints.addAll(
         binanceData!
             .where((e) => e.averagePrice != null)
             .map((e) => (date: e.date, rate: e.averagePrice!)),
       );
     }
 
-    if (points.isEmpty) {
+    if (rawPoints.isEmpty) {
       return Card(
         child: SizedBox(
           height: 220.0,
@@ -62,6 +62,9 @@ class HistoryChartCard extends StatelessWidget {
         ),
       );
     }
+
+    /* Inversión cronológica: Asegura que el tiempo fluya de izquierda (pasado) a derecha (reciente) */
+    final points = rawPoints.reversed.toList();
 
     /* Mapeo de registros a coordenadas FlSpot */
     final spots = points.asMap().entries.map((entry) {
@@ -88,6 +91,29 @@ class HistoryChartCard extends StatelessWidget {
               height: 220.0,
               child: LineChart(
                 LineChartData(
+                  /* Configuración del Tooltip al tocar un punto */
+                  lineTouchData: LineTouchData(
+                    touchTooltipData: LineTouchTooltipData(
+                      getTooltipColor: (touchedSpot) =>
+                          theme.colorScheme.surfaceContainerHigh,
+                      getTooltipItems: (List<LineBarSpot> touchedSpots) {
+                        return touchedSpots.map((spot) {
+                          final int index = spot.x.toInt();
+                          final dateStr = (index >= 0 && index < points.length)
+                              ? '${points[index].date.day}/${points[index].date.month}'
+                              : '';
+                          return LineTooltipItem(
+                            'Bs. ${spot.y.toStringAsFixed(2)}\n$dateStr',
+                            TextStyle(
+                              color: theme.colorScheme.onSurface,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12.0,
+                            ),
+                          );
+                        }).toList();
+                      },
+                    ),
+                  ),
                   gridData: FlGridData(
                     show: true,
                     drawVerticalLine: false,
