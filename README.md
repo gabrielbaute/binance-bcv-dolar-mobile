@@ -1,8 +1,11 @@
 # Dolar Pulse VE: Mobile app para BnB-BCV
 
-Bienvenidos a **Dolar Pulse VE**, la aplicación móvil para Android desarrollada en **Flutter** como cliente oficial del ecosistema de datos financieros [BnB-BCV](https://github.com/gabrielbaute/binance-bcv-dolar). 
+Bienvenidos a **Dolar Pulse VE**, la aplicación móvil para Android desarrollada en **Flutter** como cliente oficial de la app/API [BnB-BCV](https://github.com/gabrielbaute/binance-bcv-dolar). 
 
-Esta herramienta permite consultar en tiempo real e históricamente las cotizaciones del mercado cambiario venezolano (BCV y Binance P2P), ofreciendo transparencia financiera, herramientas de conversión rápida y acceso abierto sin intermediarios ni manipulaciones.
+Esta herramienta permite consultar en tiempo real e históricamente las cotizaciones del mercado cambiario venezolano (BCV y Binance P2P), ofreciendo transparencia financiera, herramientas de conversión rápida y acceso abierto sin intermediarios ni manipulaciones. Si consultan el código del backend en [BnB-BCV](https://github.com/gabrielbaute/binance-bcv-dolar), podrán ver los métodos de cálculo de los promedios:
+
+- USDT: promedio de los primeros 20 anuncios en USDT a la compra (por defecto, la aplicación guarda también los valores a la venta en la base de datos). La aplicación calcula también el promedio y la mediana de los precios.
+- BCV: el servidor guarda los precios del BCV cada día a las 12 de la medianoche, si bien la enditad bancaria publica los precios de lunes a viernes a las 5pm, esos precios publicados siempre entran en vigencia a las 00:00 del siguiente día (y el precio publicado el viernes cubre sábado, domingo y lunes).
 
 Por defecto, la aplicación se conecta a la API de nuestra instancia pública en producción:
 👉 **[https://dolar-vzla.rafnixg.dev/](https://dolar-vzla.rafnixg.dev/)**
@@ -10,23 +13,28 @@ Por defecto, la aplicación se conecta a la API de nuestra instancia pública en
 ---
 
 ## 📸 Capturas de Pantalla (Screenshots)
-
-<!-- Reemplaza los enlaces entre paréntesis por las rutas o URLs relativas a tus imágenes -->
+#### Light-theme
 <p align="center">
-  <img src="docs/screenshots/promedio.png" width="280" alt="Vista Promedio y Calculadora" />
-  <img src="docs/screenshots/realtime.png" width="280" alt="Vista Tiempo Real" />
-  <img src="docs/screenshots/history.png" width="280" alt="Vista Histórico" />
+  <img src="docs/screenshots/promedio.jpeg" width="280" alt="Vista Promedio y Calculadora" />
+  <img src="docs/screenshots/realtime.jpeg" width="280" alt="Vista Tiempo Real" />
+  <img src="docs/screenshots/history.jpeg" width="280" alt="Vista Histórico" />
+</p>
+#### Dark-theme
+<p align="center">
+  <img src="docs/screenshots/promedio-dark.jpeg" width="280" alt="Vista Promedio y Calculadora" />
+  <img src="docs/screenshots/realtime-dark.jpeg" width="280" alt="Vista Tiempo Real" />
+  <img src="docs/screenshots/history-dark.jpeg" width="280" alt="Vista Histórico" />
 </p>
 
 ---
 
 ## 💡 Filosofía Open Source & Self-Hosted
 
-En **Dolar Pulse VE** creemos firmemente en el software libre, la soberanía digital y el libre acceso a la información:
+Creemos firmemente en el software libre, la soberanía digital y el libre acceso a la información:
 
-* **Transparencia y Datos Libres:** Nace de la necesidad de contar con datos fidedignos e inalterables en un mercado cambiario propenso a la especulación.
+* **Transparencia y Datos Libres:** Tanto la aplicación como la API nacen de la necesidad de contar con datos fidedignos e inalterables en un mercado cambiario propenso a la especulación. Existen numerosas otras aplicaciones y servicios que ofrecen lo mismos datos, pero por lo general son de código cerrado. Nuestra aplicación y el backend que le acompañan son totalmente de código abierto y transparentes sobre los métodos de cálculo.
 * **Licencia Abierta:** Distribuido bajo la licencia **GNU General Public License v3.0 (GPLv3)**.
-* **Filosofía Self-Hosted:** Fiel a los principios de autoservicio e independencia, la aplicación permite cambiar la URL base de conexión en tiempo de compilación. Puedes desplegar tu propia instancia backend de **BnB-BCV** en tu servidor privado e interconectarla sin restricción alguna.
+* **Filosofía Self-Hosted:** Fiel a los principios de autoservicio e independencia, la aplicación permite cambiar la URL base de conexión en tiempo de compilación (como variables de entorno). Puedes desplegar tu propia instancia backend de **BnB-BCV** en tu servidor privado e interconectarla sin restricción alguna.
 
 ---
 
@@ -35,6 +43,7 @@ En **Dolar Pulse VE** creemos firmemente en el software libre, la soberanía dig
 La interfaz cuenta con un diseño basado en **Material 3**, soporte nativo para **Modo Claro y Oscuro**, e integración de mapas de color optimizados:
 
 1. **Dólar Promedio (`/promedio`) [Vista Principal]:**
+   * Esta vista toma la data desde la base de datos. Para no saturar la API de Binance y prevenir posibles bloqueos, no se consulta de forma estándar el precio en tiempo real, sino cada 3 horas, la consulta se guarda en la base de datos y es a ese registro en la base de datos al que accede esta vista.
    * Muestra de forma destacada el promedio ponderado/calculado entre la tasa oficial del Banco Central de Venezuela (BCV Dólar) y el mercado P2P (USDT/VES) de Binance.
    * Muestra las tarjetas individuales de **BCV Dólar**, **BCV Euro** y **USDT Binance**.
    * Integra la **Calculadora Multitasa**.
@@ -42,6 +51,7 @@ La interfaz cuenta con un diseño basado en **Material 3**, soporte nativo para 
 2. **Tiempo Real (`/realtime`):**
    * Consulta directa y sin intermediación de base de datos para obtener las tasas vigentes ejecutadas en el instante preciso en la API.
    * Monitorea variaciones al segundo del mercado P2P y tasas oficiales.
+   * Para actualizar la data, pulsa el botón de refrescar y realizará una nueva petición.
 
 3. **Historial (`/history`):**
    * Gráficos e indicadores evolutivos que muestran el comportamiento histórico de las tasas.
@@ -117,5 +127,3 @@ Este proyecto es software libre bajo la **Licencia Pública General GNU v3.0**. 
 
 * **Desarrollo Backend & API:** [BnB-BCV en GitHub](https://github.com/gabrielbaute/binance-bcv-dolar)
 * **Agradecimientos:** Al usuario `@DevOpsLP` por su contribución original en Google Apps Script para la recolección inicial de datos de Binance P2P.
-
-```
