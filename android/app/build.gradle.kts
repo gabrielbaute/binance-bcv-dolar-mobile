@@ -48,9 +48,16 @@ android {
         release {
             // Asigna la firma de release configurada arriba
             signingConfig = signingConfigs.getByName("release")
-            
-            isMinifyEnabled = false
-            isShrinkResources = false
+
+            // Habilitar minificación/ofuscación y optimización de recursos
+            isMinifyEnabled = true
+            isShrinkResources = true
+
+            // Archivos de reglas para R8/ProGuard
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 }
