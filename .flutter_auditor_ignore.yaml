@@ -1,0 +1,4 @@
+# .flutter_auditor_ignore.yaml
+# MainActivity es launcher: exported=true es obligatorio (Android 12+)
+ids:
+  - android_exported_components_activity_.MainActivity
