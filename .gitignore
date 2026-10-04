@@ -47,6 +47,9 @@ app.*.map.json
 # Repomix
 repomix-output.xml
 
+# flutter_audit
+report.json
+
 # Releases
 release/
 **/android/key.properties
