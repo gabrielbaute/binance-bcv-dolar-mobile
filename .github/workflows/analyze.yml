@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
           java-version: '21'
@@ -40,5 +40,7 @@ jobs:
       - name: Static Analysis
         run: flutter analyze
 
-      - name: Audit Dependencies
-        run: flutter pub audit
+      - name: Install & Run Security Audit
+        run: |
+          dart pub global activate flutter_auditor
+          dart pub global run flutter_auditor audit
