@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Reglas de respaldo para Android 11 y anteriores -->
+<full-backup-content>
+    <!-- Excluir archivos sensibles o temporales de la copia en la nube -->
+    <exclude domain="sharedpref" path="." />
+    <exclude domain="database" path="." />
+</full-backup-content>

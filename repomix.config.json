@@ -23,7 +23,6 @@
     "useDefaultPatterns": true,
     "customPatterns": [
       "pubspec.lock",
-      "android/**",
       "ios/**",
       "web/**",
       "linux/**",

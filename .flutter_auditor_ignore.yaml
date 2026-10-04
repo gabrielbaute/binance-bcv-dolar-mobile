@@ -1,0 +1,6 @@
+# .flutter_auditor_ignore.yaml
+ids:
+  - android_exported_components_activity_.MainActivity   # Falso positivo: launcher obligatorio en Android 12+
+
+files:
+  - assets/fonts/**   # Fuentes usadas vía fontFamily en AppTextTheme; el auditor no resuelve la referencia indirecta

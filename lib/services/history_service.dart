@@ -16,7 +16,7 @@ class HistoryService {
   final ApiClient _apiClient;
 
   HistoryService({ApiClient? apiClient})
-      : _apiClient = apiClient ?? ApiClient();
+    : _apiClient = apiClient ?? ApiClient();
 
   /// Obtiene el histórico de tasas del BCV para una moneda específica.
   ///
