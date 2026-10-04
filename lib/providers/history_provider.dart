@@ -107,7 +107,7 @@ class HistoryProvider extends ChangeNotifier {
   ///   limit (int): Límite máximo de registros a retornar por consulta. Por defecto es 100.
   ///
   /// Returns:
-  ///   Future<void>: Operación asíncrona completada.
+  ///   Future&lt;void&gt;: Operación asíncrona completada.
   ///
   /// Raises:
   ///   ApiException: Excepción capturada e interpretada en errorMessage.

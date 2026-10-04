@@ -57,7 +57,7 @@ class RealtimeProvider extends ChangeNotifier {
   ///   forceRefresh (bool): Si es true, ignora la caché local y consulta la API en tiempo real. Por defecto es false.
   ///
   /// Returns:
-  ///   Future<void>: Operación asíncrona completada.
+  ///   Future&lt;void&gt;: Operación asíncrona completada.
   ///
   /// Raises:
   ///   ApiException: Excepción capturada e interpretada en errorMessage.
