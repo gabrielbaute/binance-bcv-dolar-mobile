@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../views/promedio_view.dart';
-import '../views/realtime_view.dart';
-import '../views/history_view.dart';
+
 import '../views/about_view.dart';
+import '../views/history_view.dart';
+import '../views/logs_view.dart';
+import '../views/realtime_view.dart';
+import '../views/promedio_view.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -36,6 +38,12 @@ class AppRouter {
       GoRoute(
         path: '/about',
         builder: (context, state) => const AboutView(currentPath: '/about'),
+      ),
+      GoRoute(
+        path: '/logs',
+        builder: (BuildContext context, GoRouterState state) {
+          return const LogsView();
+        },
       ),
     ],
   );

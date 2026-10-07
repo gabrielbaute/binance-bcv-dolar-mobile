@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'api_endpoints.dart';
+import 'logging_interceptor_service.dart';
 import '../errors/api_exceptions.dart';
 
 /// Cliente HTTP de bajo nivel para consumir la API.
@@ -24,14 +25,21 @@ class ApiClient {
         },
       ),
     );
+
+    _dio.interceptors.add(LoggingInterceptor());
   }
 
   /// Realiza una petición GET genérica.
   ///
-  /// [endpoint] es la ruta relativa definida en [ApiEndpoints].
-  /// [queryParameters] mapa de parámetros URL.
+  /// Args:
+  ///   - `endpoint` (String): Ruta relativa del endpoint a consultar.
+  ///   - `queryParameters` (Map&lt;String, dynamic&gt;?): Parámetros de consulta opcionales para la URL.
   ///
-  /// Retorna un [dynamic] (habitualmente Map[String, dynamic] o List[dynamic]).
+  /// Returns:
+  ///   - `Future<dynamic>`: Respuesta devuelta por el servidor tras la petición.
+  ///
+  /// Raises:
+  ///   - `ApiException`: Si ocurre un error durante la comunicación de red o en el servidor.
   Future<dynamic> get(
     String endpoint, {
     Map<String, dynamic>? queryParameters,
@@ -62,7 +70,13 @@ class ApiClient {
     );
   }
 
-  /// Procesa las excepciones de Dio y las unifica en un [ApiException].
+  /// Procesa las excepciones generadas por Dio y las transforma en excepciones del dominio [ApiException].
+  ///
+  /// Args:
+  ///   - `error` (DioException): Excepción capturada durante la ejecución de una petición.
+  ///
+  /// Returns:
+  ///   - `ApiException`: Excepción transformada adecuada para ser gestionada por los repositorios.
   ApiException _handleDioError(DioException error) {
     String message;
     int statusCode = error.response?.statusCode ?? 500;

@@ -40,7 +40,7 @@ class _PromedioViewState extends State<PromedioView> {
     final response = provider.dolarData;
 
     return MainLayout(
-      title: 'Dólar Promedio VE',
+      title: 'DólarPulse',
       currentPath: widget.currentPath,
       isRefreshing: provider.isLoading,
       onRefresh: () => provider.fetchDolarPromedio(forceRefresh: true),
