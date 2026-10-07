@@ -6,7 +6,7 @@ import '../../enums/log_level.dart';
 ///
 /// Attributes:
 ///   - `selectedFilter` (LogLevel?): Nivel de severidad actualmente seleccionado, o null si se muestran todos.
-///   - `onFilterSelected` (ValueChanged&lt;LogLevel?&gt;): Función callback invocada al cambiar el nivel seleccionado.
+///   - `onFilterSelected` (ValueChanged<LogLevel?>): Función callback invocada al cambiar el nivel seleccionado.
 ///
 /// Returns:
 ///   - `LogFilter`: Widget desacoplado que renderiza el selector desplegable de filtros.
@@ -18,7 +18,7 @@ class LogFilter extends StatelessWidget {
   ///
   /// Args:
   ///   - `selectedFilter` (LogLevel?): Nivel actualmente seleccionado.
-  ///   - `onFilterSelected` (ValueChanged&lt;LogLevel?&gt;): Invocación al cambiar el filtro.
+  ///   - `onFilterSelected` (ValueChanged<LogLevel?>): Invocación al cambiar el filtro.
   const LogFilter({
     super.key,
     required this.selectedFilter,
@@ -32,7 +32,8 @@ class LogFilter extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: DropdownButtonFormField<LogLevel?>(
-        value: selectedFilter,
+        key: ValueKey(selectedFilter),
+        initialValue: selectedFilter,
         isExpanded: true,
         style: theme.textTheme.bodyMedium,
         decoration: InputDecoration(
