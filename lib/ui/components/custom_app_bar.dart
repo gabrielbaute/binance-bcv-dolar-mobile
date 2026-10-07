@@ -66,6 +66,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           icon: Icon(Icons.info_rounded, color: theme.colorScheme.primary),
           onPressed: () => context.push('/about'),
         ),
+
+        /* Botón de acceso a los logs de la app */
+        IconButton(
+          tooltip: 'Logs de la aplicación',
+          icon: Icon(Icons.terminal, color: theme.colorScheme.primary),
+          onPressed: () => context.push('/logs'),
+        ),
       ],
     );
   }
