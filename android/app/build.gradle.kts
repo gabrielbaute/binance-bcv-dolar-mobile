@@ -16,7 +16,7 @@ plugins {
 
 android {
     namespace = "com.octopus_team.dolarvzla"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 37
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
