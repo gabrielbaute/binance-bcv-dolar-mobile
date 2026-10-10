@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
-import '../../providers/theme_provider.dart';
+
 import 'refresh_button.dart';
 
 /// AppBar personalizada y reutilizable para las pantallas de la aplicación.
@@ -34,7 +33,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = context.watch<ThemeProvider>();
     final theme = Theme.of(context);
 
     return AppBar(
