@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
-import '../../providers/theme_provider.dart';
+
 import 'refresh_button.dart';
 
 /// AppBar personalizada y reutilizable para las pantallas de la aplicación.
@@ -34,7 +33,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = context.watch<ThemeProvider>();
     final theme = Theme.of(context);
 
     return AppBar(
@@ -48,30 +46,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         if (onRefresh != null)
           RefreshButton(onRefresh: onRefresh!, isLoading: isRefreshing),
 
-        /* Boton para alternar el tema claro/oscuro */
+        /* Botón de settings */
         IconButton(
-          tooltip: 'Cambiar tema',
-          icon: Icon(
-            themeProvider.isDarkMode
-                ? Icons.light_mode_rounded
-                : Icons.dark_mode_rounded,
-            color: theme.colorScheme.primary,
-          ),
-          onPressed: () => themeProvider.toggleTheme(),
-        ),
-
-        /* Boton de informacion sobre la app (About) */
-        IconButton(
-          tooltip: 'Acerca de',
-          icon: Icon(Icons.info_rounded, color: theme.colorScheme.primary),
-          onPressed: () => context.push('/about'),
-        ),
-
-        /* Botón de acceso a los logs de la app */
-        IconButton(
-          tooltip: 'Logs de la aplicación',
-          icon: Icon(Icons.terminal_rounded, color: theme.colorScheme.primary),
-          onPressed: () => context.push('/logs'),
+          tooltip: 'Ajustes de la aplicación',
+          icon: Icon(Icons.settings_rounded, color: theme.colorScheme.primary),
+          onPressed: () => context.push('/settings'),
         ),
       ],
     );
