@@ -4,8 +4,9 @@ import 'package:go_router/go_router.dart';
 import '../views/about_view.dart';
 import '../views/history_view.dart';
 import '../views/logs_view.dart';
-import '../views/realtime_view.dart';
 import '../views/promedio_view.dart';
+import '../views/realtime_view.dart';
+import '../views/settings_view.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -43,6 +44,12 @@ class AppRouter {
         path: '/logs',
         builder: (BuildContext context, GoRouterState state) {
           return const LogsView();
+        },
+      ),
+      GoRoute(
+        path: '/settings',
+        builder: (BuildContext context, GoRouterState state) {
+          return SettingsView(currentPath: state.uri.toString());
         },
       ),
     ],
