@@ -50,7 +50,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         IconButton(
           tooltip: 'Ajustes de la aplicación',
           icon: Icon(Icons.settings_rounded, color: theme.colorScheme.primary),
-          onPressed: () => context.push('/logs'),
+          onPressed: () => context.push('/settings'),
         ),
       ],
     );
