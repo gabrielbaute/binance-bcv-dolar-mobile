@@ -31,6 +31,7 @@ class NtfyService {
   ///   - topicUrl (String): URL completa del tópico NTFY (ej. https://dolarpulsentfy.samanbooks.site/dolar_test).
   ///   - username (String?): Usuario opcional para autenticación.
   ///   - password (String?): Contraseña opcional para autenticación.
+  ///   - accessToken (String?): Token de acceso.
   ///
   /// Returns:
   ///   - Future&lt;bool&gt;: True si la suscripción y escucha se iniciaron con éxito.
@@ -38,6 +39,7 @@ class NtfyService {
     required String topicUrl,
     String? username,
     String? password,
+    String? accessToken,
   }) async {
     try {
       _logService.info('Iniciando proceso de suscripción a NTFY...');
@@ -62,12 +64,13 @@ class NtfyService {
         'Configuración de conexión preparada - Base: ${connectionConfig['baseUrl']}, Tópico: ${connectionConfig['topicName']}',
       );
 
-      // 3. Inicializar la escucha de eventos en segundo plano vía helper
+      // 3. Inicializar la escucha de eventos en segundo plano pasando el token
       await _listenToTopic(
         baseUrl: connectionConfig['baseUrl']!,
         topicName: connectionConfig['topicName']!,
         username: username,
         password: password,
+        accessToken: accessToken,
       );
 
       _isSubscribed = true;
@@ -177,6 +180,7 @@ class NtfyService {
   ///   - topicName (String): Nombre del tópico a escuchar.
   ///   - username (String?): Usuario opcional.
   ///   - password (String?): Contraseña opcional.
+  ///   - accessToken (String?): Token de acceso opcional.
   ///
   /// Returns:
   ///   - Future&lt;void&gt;
@@ -185,6 +189,7 @@ class NtfyService {
     required String topicName,
     String? username,
     String? password,
+    String? accessToken,
   }) async {
     _logService.verbose(
       'Estableciendo conexión de escucha (stream) con NTFY en $baseUrl (Tópico: $topicName)...',
@@ -193,7 +198,16 @@ class NtfyService {
     await _messageSubscription?.cancel();
 
     String? authHeader;
-    if (username != null &&
+
+    // Priorizar Token de Acceso si está presente
+    if (accessToken != null && accessToken.isNotEmpty) {
+      authHeader = 'Bearer $accessToken';
+      _logService.debug(
+        'Autenticación Bearer Token configurada para el cliente NTFY.',
+      );
+    }
+    // Si no, verificar Basic Auth tradicional
+    else if (username != null &&
         password != null &&
         username.isNotEmpty &&
         password.isNotEmpty) {
