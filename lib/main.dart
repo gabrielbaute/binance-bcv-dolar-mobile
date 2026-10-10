@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'providers/dolar_promedio_provider.dart';
 import 'providers/history_provider.dart';
+import 'providers/ntfy_provider.dart';
 import 'providers/realtime_provider.dart';
 import 'providers/theme_provider.dart';
 import 'ui/themes/app_theme.dart';
@@ -12,6 +13,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => NtfyProvider()),
         ChangeNotifierProvider(create: (_) => DolarPromedioProvider()),
         ChangeNotifierProvider(create: (_) => RealtimeProvider()),
         ChangeNotifierProvider(create: (_) => HistoryProvider()),
