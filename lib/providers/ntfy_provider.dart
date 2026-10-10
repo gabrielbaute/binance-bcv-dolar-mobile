@@ -32,19 +32,22 @@ class NtfyProvider extends ChangeNotifier {
   Future<void> _loadInitialState() async {
     final savedState = await PreferencesService.getNtfySubscribed();
     if (savedState == true) {
-      // Como el usuario tenía las notificaciones activas, intentamos reanudar la suscripción.
-      // Usamos las mismas credenciales y URL por defecto configuradas para NTFY.
+      // Usamos las credenciales, URL y token por defecto configurados mediante variables de entorno.
       const String topicUrl = String.fromEnvironment(
         'NTFY_TOPIC_URL',
         defaultValue: 'https://your-ntfy-service',
       );
       const String username = String.fromEnvironment(
         'NTFY_USERNAME',
-        defaultValue: 'your-user',
+        defaultValue: '',
       );
       const String password = String.fromEnvironment(
         'NTFY_PASSWORD',
-        defaultValue: 'your-pass',
+        defaultValue: '',
+      );
+      const String accessToken = String.fromEnvironment(
+        'NTFY_ACCESS_TOKEN',
+        defaultValue: '',
       );
 
       _isLoading = true;
@@ -55,6 +58,7 @@ class NtfyProvider extends ChangeNotifier {
           topicUrl: topicUrl,
           username: username.isNotEmpty ? username : null,
           password: password.isNotEmpty ? password : null,
+          accessToken: accessToken.isNotEmpty ? accessToken : null,
         );
 
         if (!success) {
@@ -77,6 +81,7 @@ class NtfyProvider extends ChangeNotifier {
   ///   - topicUrl (String): URL del tópico NTFY.
   ///   - username (String?): Usuario de autenticación opcional.
   ///   - password (String?): Contraseña opcional.
+  ///   - accessToken (String?): Token de acceso opcional (Bearer Token).
   ///
   /// Returns:
   ///   - Future&lt;void&gt;
@@ -84,6 +89,7 @@ class NtfyProvider extends ChangeNotifier {
     required String topicUrl,
     String? username,
     String? password,
+    String? accessToken,
   }) async {
     _isLoading = true;
     _errorMessage = null;
@@ -98,6 +104,7 @@ class NtfyProvider extends ChangeNotifier {
           topicUrl: topicUrl,
           username: username,
           password: password,
+          accessToken: accessToken,
         );
         if (success) {
           await PreferencesService.saveNtfySubscribed(true);
