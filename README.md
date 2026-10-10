@@ -114,7 +114,11 @@ Por defecto la app apunta a `https://dolar-vzla.rafnixg.dev`. Si deseas conectar
 flutter run --dart-define=BASE_URL=https://tu-instancia-bcv.midominio.com
 
 # Para compilar el APK en release con tu servidor propio
-flutter build apk --release --dart-define=BASE_URL=https://tu-instancia-bcv.midominio.com
+flutter build apk --release \
+    --dart-define=NTFY_TOPIC_URL=https://your-ntfy-instance/your-topic \
+    --dart-define=NTFY_USERNAME=your-user \
+    --dart-define=NTFY_PASSWORD=your-pass \
+    --dart-define=BASE_URL=https://tu-instancia-bcv.midominio.com
 
 # Limpiar el directorio y extraer la app
 dart run flutter_post_build
